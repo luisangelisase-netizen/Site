@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Boss Encyclopedia</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    :root{
+      --bg:#070707;
+      --card:#111111;
+      --primary:#8b5cf6;
+      --secondary:#ef4444;
+      --text:#ffffff;
+      --muted:#bdbdbd;
+      --border:#262626;
+    }
+
+    body{
+      background:linear-gradient(to bottom,#050505,#0d0d0d);
+      color:var(--text);
+      font-family:'Inter',sans-serif;
+      overflow-x:hidden;
+    }
+
+    header{
+      position:sticky;
+      top:0;
+      z-index:999;
+      backdrop-filter:blur(10px);
+      background:rgba(0,0,0,0.7);
+      border-bottom:1px solid var(--border);
+    }
+
+    nav{
+      max-width:1300px;
+      margin:auto;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:20px;
+    }
+
+    .logo{
+      font-family:'Orbitron',sans-serif;
+      font-size:1.5rem;
+      color:var(--primary);
+      font-weight:700;
+      text-shadow:0 0 10px var(--primary);
+    }
+
+    .nav-links{
+      display:flex;
+      gap:25px;
+    }
+
+    .nav-links a{
+      text-decoration:none;
+      color:white;
+      transition:0.3s;
+      font-weight:600;
+    }
+
+    .nav-links a:hover{
+      color:var(--primary);
+    }
+
+    .hero{
+      min-height:90vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      text-align:center;
+      padding:40px;
+      background:
+      linear-gradient(rgba(0,0,0,0.8),rgba(0,0,0,0.9)),
+      url('https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=2071&auto=format&fit=crop');
+      background-size:cover;
+      background-position:center;
+    }
+
+    .hero-content{
+      max-width:900px;
+    }
+
+    .hero h1{
+      font-size:4rem;
+      font-family:'Orbitron',sans-serif;
+      margin-bottom:20px;
+      line-height:1.2;
+    }
+
+    .gradient{
+      background:linear-gradient(to right,var(--primary),var(--secondary));
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
+
+    .hero p{
+      color:var(--muted);
+      font-size:1.1rem;
+      margin-bottom:35px;
+      line-height:1.8;
+    }
+
+    .hero-buttons{
+      display:flex;
+      justify-content:center;
+      gap:20px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      padding:14px 28px;
+      border:none;
+      border-radius:12px;
+      cursor:pointer;
+      font-weight:700;
+      transition:0.3s;
+      text-decoration:none;
+      display:inline-block;
+    }
+
+    .btn-primary{
+      background:var(--primary);
+      color:white;
+      box-shadow:0 0 20px rgba(139,92,246,0.4);
+    }
+
+    .btn-primary:hover{
+      transform:translateY(-3px);
+      box-shadow:0 0 30px rgba(139,92,246,0.7);
+    }
+
+    .btn-secondary{
+      background:transparent;
+      border:1px solid var(--border);
+      color:white;
+    }
+
+    .btn-secondary:hover{
+      border-color:var(--primary);
+      color:var(--primary);
+    }
+
+    section{
+      padding:90px 20px;
+    }
+
+    .section-title{
+      text-align:center;
+      font-size:2.5rem;
+      margin-bottom:15px;
+      font-family:'Orbitron',sans-serif;
+    }
+
+    .section-description{
+      text-align:center;
+      color:var(--muted);
+      max-width:800px;
+      margin:0 auto 60px;
+      line-height:1.7;
+    }
+
+    .search-container{
+      max-width:700px;
+      margin:0 auto 50px;
+    }
+
+    .search-input{
+      width:100%;
+      padding:18px;
+      border-radius:15px;
+      border:1px solid var(--border);
+      background:#101010;
+      color:white;
+      font-size:1rem;
+      outline:none;
+    }
+
+    .search-input:focus{
+      border-color:var(--primary);
+      box-shadow:0 0 15px rgba(139,92,246,0.3);
+    }
+
+    .boss-grid{
+      max-width:1300px;
+      margin:auto;
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:30px;
+    }
+
+    .boss-card{
+      background:linear-gradient(to bottom,#111,#0a0a0a);
+      border:1px solid var(--border);
+      border-radius:22px;
+      overflow:hidden;
+      transition:0.4s;
+      position:relative;
+    }
+
+    .boss-card:hover{
+      transform:translateY(-8px);
+      border-color:var(--primary);
+      box-shadow:0 0 25px rgba(139,92,246,0.2);
+    }
+
+    .boss-image{
+      width:100%;
+      height:220px;
+      object-fit:cover;
+    }
+
+    .boss-content{
+      padding:25px;
+    }
+
+    .boss-title{
+      font-size:1.5rem;
+      margin-bottom:10px;
+      font-family:'Orbitron',sans-serif;
+    }
+
+    .difficulty{
+      display:inline-block;
+      padding:6px 12px;
+      border-radius:999px;
+      font-size:0.8rem;
+      font-weight:700;
+      margin-bottom:18px;
+    }
+
+    .extreme{
+      background:rgba(158, 49, 49, 0.2);
+      color:#ff7b7b;
+    }
+
+    .legendary{
+      background:rgba(158, 49, 49, 0.2);
+      color: #ff7b7b;
+    }
+
+    .mythic{
+      background:rgba(158, 49, 49, 0.2);
+      color:#ff7b7b;
+    }
+
+    .boss-text{
+      color:var(--muted);
+      line-height:1.7;
+      margin-bottom:20px;
+    }
+
+    .stats{
+      display:flex;
+      justify-content:space-between;
+      margin-bottom:20px;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .stat-box{
+      background:#151515;
+      border:1px solid #202020;
+      padding:10px;
+      border-radius:12px;
+      flex:1;
+      text-align:center;
+    }
+
+    .stat-box h4{
+      font-size:0.8rem;
+      color:var(--muted);
+      margin-bottom:5px;
+    }
+
+    .carry-section{
+      background:linear-gradient(to right,#0d0d0d,#121212);
+      border-top:1px solid var(--border);
+      border-bottom:1px solid var(--border);
+    }
+
+    .carry-grid{
+      max-width:1200px;
+      margin:auto;
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      gap:25px;
+    }
+
+    .carry-card{
+      background:#101010;
+      padding:30px;
+      border-radius:20px;
+      border:1px solid var(--border);
+      transition:0.3s;
+    }
+
+    .carry-card:hover{
+      border-color:var(--secondary);
+      transform:translateY(-6px);
+    }
+
+    .price{
+      font-size:2rem;
+      color:var(--secondary);
+      margin:15px 0;
+      font-weight:700;
+    }
+
+    .tier-list{
+      max-width:1100px;
+      margin:auto;
+      display:flex;
+      flex-direction:column;
+      gap:20px;
+    }
+
+    .tier-row{
+      display:flex;
+      gap:15px;
+      align-items:center;
+      padding:20px;
+      border-radius:18px;
+      background:#101010;
+      border:1px solid var(--border);
+      flex-wrap:wrap;
+    }
+
+    .tier-rank{
+      width:80px;
+      height:80px;
+      border-radius:16px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      font-size:2rem;
+      font-weight:700;
+      font-family:'Orbitron',sans-serif;
+    }
+
+    .rank-s{
+      background:#ff4545;
+    }
+
+    .rank-a{
+      background:#8b5cf6;
+    }
+
+    .rank-b{
+      background:#2563eb;
+    }
+
+    .tier-bosses{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .tier-boss{
+      padding:12px 18px;
+      border-radius:12px;
+      background:#181818;
+      border:1px solid #262626;
+    }
+
+    footer{
+      text-align:center;
+      padding:40px 20px;
+      border-top:1px solid var(--border);
+      color:var(--muted);
+    }
+
+    @media(max-width:768px){
+      .hero h1{
+        font-size:2.6rem;
+      }
+
+      .nav-links{
+        display:none;
+      }
+
+      .hero-buttons{
+        flex-direction:column;
+      }
+
+      .section-title{
+        font-size:2rem;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav>
+      <div class="logo">BOSS WIKI</div>
+
+      <div class="nav-links">
+        <a href="#bosses">Bosses</a>
+        <a href="#carry">Carry</a>
+        <a href="#tier">Tier List</a>
+        <a href="#about">About</a>
+      </div>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-content">
+      <h1>
+        The Ultimate <span class="gradient">Boss Encyclopedia</span>
+      </h1>
+
+      <p>
+        Explore the strongest bosses, discover hidden lore, compare rankings,
+        learn strategies and buy carry services for the hardest raids.
+      </p>
+
+      <div class="hero-buttons">
+        <a href="#bosses" class="btn btn-primary">Explore Bosses</a>
+        <a href="#carry" class="btn btn-secondary">Carry Service</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="bosses">
+    <h2 class="section-title">Featured Bosses</h2>
+
+    <p class="section-description">
+      Search and discover the strongest entities in the game universe.
+    </p>
+
+    <div class="search-container">
+      <input type="text" id="searchInput" class="search-input" placeholder="Search Boss...">
+    </div>
+
+    <div class="boss-grid" id="bossGrid">
+
+      <div class="boss-card">
+       <img src="God.webp">
+
+        <div class="boss-content">
+          <h3 class="boss-title">God Demon</h3>
+
+          <span class="difficulty extreme">Extreme</span>
+
+          <p class="boss-text">
+            The supreme ruler of destruction with devastating attacks and impossible mechanics.
+          </p>
+
+          <div class="stats">
+            <div class="stat-box">
+              <h4>HP</h4>
+              <p>5M</p>
+            </div>
+
+            <div class="stat-box">
+              <h4>Drop</h4>
+              <p>Extreme</p>
+            </div>
+          </div>
+
+          <button class="btn btn-primary">View Boss</button>
+        </div>
+      </div>
+
+      <div class="boss-card">
+        <img src="Dr.ahat.webp" style="width: 420px; height: 320px;">
+
+        <div class="boss-content">
+          <h3 class="boss-title">Dr. Ahat Man</h3>
+
+          <span class="difficulty mythic">Extreme</span>
+
+          <p class="boss-text">
+            A chaotic entity capable of manipulating dimensions and destroying timelines.
+          </p>
+
+          <div class="stats">
+            <div class="stat-box">
+              <h4>HP</h4>
+              <p>3.1M</p>
+            </div>
+
+
+            <div class="stat-box">
+              <h4>Drop</h4>
+              <p>Extreme</p>
+            </div>
+          </div>
+
+          <button class="btn btn-primary">View Boss</button>
+        </div>
+      </div>
+
+      <div class="boss-card">
+        <img src="Cazar.jpg" style="max-width: 100%; height: 320px;">
+
+        <div class="boss-content">
+          <h3 class="boss-title">Cazar, the fallen warrior</h3>
+
+          <span class="difficulty legendary">Extreme</span>
+
+          <p class="boss-text">
+            A mysterious king hidden in the darkness with cursed abilities and high speed.
+          </p>
+
+          <div class="stats">
+            <div class="stat-box">
+              <h4>HP</h4>
+              <p>30M</p>
+            </div>
+
+            <div class="stat-box">
+              <h4>Drop</h4>
+              <p>Epic</p>
+            </div>
+          </div>
+
+          <button class="btn btn-primary">View Boss</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="carry-section" id="carry">
+    <h2 class="section-title">Carry Service</h2>
+
+    <p class="section-description">
+      Need help defeating impossible bosses? Buy carry services and complete raids faster.
+    </p>
+
+    <div class="carry-grid">
+
+      <div class="carry-card">
+        <h3>God Demon Carry</h3>
+        <div class="price">500 Robux</div>
+        <p class="boss-text">
+          Includes full raid completion and reward guarantee.
+        </p>
+
+        <button class="btn btn-primary">Buy Carry</button>
+      </div>
+
+      <div class="carry-card">
+        <h3>Dr. Ahat Man Carry</h3>
+        <div class="price">1000 Robux</div>
+        <p class="boss-text">
+          Fast completion with experienced players.
+        </p>
+
+        <button class="btn btn-primary">Buy Carry</button>
+      </div>
+
+      <div class="carry-card">
+        <h3>Shadow King Carry</h3>
+        <div class="price">200 Robux</div>
+        <p class="boss-text">
+          Beginner-friendly carry for rare item farming.
+        </p>
+
+        <button class="btn btn-primary">Buy Carry</button>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="tier">
+    <h2 class="section-title">Tier List</h2>
+
+    <p class="section-description">
+      Ranking the strongest bosses by difficulty, power and mechanics.
+    </p>
+
+    <div class="tier-list">
+
+      <div class="tier-row">
+        <div class="tier-rank rank-s">S+</div>
+
+        <div class="tier-bosses">
+          <div class="tier-boss">God Demon</div>
+          <div class="tier-boss">Dr. Ahat Man</div>
+          <div class="tier-boss">Divine P4</div>
+          <div class="tier-boss">Cazar , The Fallen Warrior</div>
+          <div class="tier-boss">Zyrith</div>
+        </div>
+      </div>
+
+      <div class="tier-row">
+        <div class="tier-rank rank-a">S</div>
+
+        <div class="tier-bosses">
+          <div class="tier-boss">Shadow King</div>
+          <div class="tier-boss">Chaos king</div>
+          <div class="tier-boss">Cazar</div>
+          <div class="tier-boss">ShockWaver</div>
+        </div>
+      </div>
+
+      <div class="tier-row">
+        <div class="tier-rank rank-b">A</div>
+
+        <div class="tier-bosses">
+          <div class="tier-boss">Void Beast</div>
+          <div class="tier-boss">Ancient Dragon</div>
+          <div class="tier-boss">Aelius</div>
+          <div class="tier-boss">Crimson Shades</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="about">
+    <h2 class="section-title">About The Wiki</h2>
+
+    <p class="section-description">
+      Boss Encyclopedia is a dark gaming wiki focused on boss battles, strategies, lore, rankings and carry services.
+      The website was created with HTML, CSS, JavaScript, IA & TAILWIND CSS following UX/UI principles such as readability,
+      responsiveness, visual hierarchy and strategic color psychology.
+    </p>
+  </section>
+
+  <footer>
+    <p> 2026 Boss Encyclopedia — Created with HTML, CSS, JavaScript , IA & TAILWIND CSS</p>
+  </footer>
+
+  <script>
+    const searchInput = document.getElementById('searchInput');
+    const cards = document.querySelectorAll('.boss-card');
+
+    searchInput.addEventListener('input', () => {
+      const value = searchInput.value.toLowerCase();
+
+      cards.forEach(card => {
+        const title = card.querySelector('.boss-title').textContent.toLowerCase();
+
+        if(title.includes(value)){
+          card.style.display = 'block';
+        }else{
+          card.style.display = 'none';
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
